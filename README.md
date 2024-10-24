@@ -223,7 +223,7 @@ kubectl apply -f manifests --recursive -n dev
   pg_dump -h $POSTGRES_SERVER -U $POSTGRES_USER -f /backups/backup-$TIMESTAMP.sql
   ```
 
-- To test the `postgres-backup` CronJob without waiting until midnight, create a one-time Job from the CronJob. This will allow you to trigger a backup immediately and verify that the setup is working correctly. Use a `kubectl` to create a job from the existing `postgres-backup` CronJob, ensuring it runs with the same configuration.
+- To test the `postgres-backup` CronJob without waiting until midnight, create a one-time Job from the CronJob. This will allow you to trigger a backup immediately and verify that the setup is working correctly. Use `kubectl` to create a job from the existing `postgres-backup` CronJob, ensuring it runs with the same configuration.
 
 - And the last one: try to find the backup file directly on the `node-basic` node, It won't be easy)))
 
