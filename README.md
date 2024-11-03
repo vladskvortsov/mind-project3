@@ -148,7 +148,7 @@ All you need to do is add the required configuration into **8 files** inside the
 kubectl apply -f manifests --recursive -n dev
 ```
 
-- Create a Deployment named "backend" in `manifests/backend/deployment.yaml`. It should have 1 replica, and the container should use the image `backend:0.7.1`, and expose port `8080`.
+- Create a Deployment named "backend" in `manifests/backend/deployment.yaml`. It should have 1 replica, and the container should use the image `backend:0.7.1`, and expose port `8000`.
 
 - Create a Secret in `manifests/backend/secret.yaml` named `backend-secrets`. Some values are predefined, but you need to generate a `FIRST_SUPERUSER_PASSWORD` and find the `POSTGRES_PASSWORD` from your cluster. Refer to the comments inside the `secret.yaml` file for detailed instructions.
 
@@ -182,19 +182,19 @@ kubectl apply -f manifests --recursive -n dev
   - Configure the path `/api` to also redirect traffic to the `backend` service.
   - Configure the root path `/` to redirect traffic to the `frontend` service.
 
-- If you have configured everything properly, you can open `localhost` in your browser and see the application. Try logging in using the credentials from the secret you created and explore the app. Also, check if `localhost/docs` is working to access the API documentation. 
+- If you have configured everything properly, you can open `localhost` in your browser and see the application. Try logging in using the credentials from the secret you created and explore the app. Also, check if `localhost/docs` is working to access the API documentation.
 
   If you encounter any issues, don't worry — troubleshooting is a crucial skill, and solving these challenges will help you learn even more.
 
 - In real-world scenarios, we often need to control where applications are deployed. To practice this, let's establish the following rule for our setup:
-  
+
   The `backend` should only be deployed on the `fast-node`, while the `frontend` can be deployed on either the `fast-node` or `basic-node` (since the `db-node` is exclusively reserved for PostgreSQL).
 
   Find a way to update the backend deployment to make it true.
 
 - Understand **resource requests** and **limits** in Kubernetes, which manage how much CPU and memory a container can use. Then, add the following settings to your deployments:
 
-  **Backend**: Requests `100m` CPU, `256Mi` memory; Limits `500m` CPU, `1Gi` memory  
+  **Backend**: Requests `100m` CPU, `256Mi` memory; Limits `500m` CPU, `1Gi` memory
   **Frontend**: Requests `75m` CPU, `128Mi` memory; Limits `150m` CPU, `256Mi` memory
 
 - Add **liveness** and **readiness** probes to the `backend` and `frontend` deployments to monitor the health of your services:
