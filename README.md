@@ -205,7 +205,7 @@ kubectl apply -f manifests --recursive -n dev
 
   **Backend**:
   - Liveness: Check `path: /api/v1/utils/health-check/` on `port: 8000`, with a 15-second initial delay and a 20-second interval.
-  - Readiness: Check `path: /api/v1/utils/health-check/` on `port: 8000`, with a 7-second initial delay and a 10-second interval.
+  - Readiness: Check `path: /api/v1/utils/health-check/` on `port: 8000`, with a 15-second initial delay and a 10-second interval.
 
 - We'll set up a periodic job to back up our PostgreSQL database, ensuring regular data protection. Start by creating a PersistentVolumeClaim (PVC) in `manifests/pvc.yaml` named `postgres-backup` with `ReadWriteOnce` access, `0.5Gi` of storage, and `standard` as the storage class.
 
