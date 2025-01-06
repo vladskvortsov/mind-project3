@@ -1,2 +1,73 @@
-# apiVersion: batch/v1
-# kind: CronJob
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: postgres-backup
+spec:
+  schedule: "0 0 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          # nodeSelector:
+          #   kubernetes.io/name: node-db
+          restartPolicy: OnFailure
+          containers:
+          - name: postgres-backup
+            image: postgres:17.0
+            command:
+            - /bin/sh
+            - -c
+            - export TIMESTAMP=$(date +"%Y%m%d%H%M%S")
+            - export PGPASSWORD=$POSTGRES_PASSWORD
+            - pg_dump -h $POSTGRES_SERVER -U $POSTGRES_USER -f /backups/backup-$TIMESTAMP.sql
+            volumeMounts:
+              - name: postgres-backup
+                mountPath: /backups
+            env:
+            - name: PROJECT_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: PROJECT_NAME
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: SECRET_KEY
+            - name: FIRST_SUPERUSER
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: FIRST_SUPERUSER
+            - name: FIRST_SUPERUSER_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: FIRST_SUPERUSER_PASSWORD
+            - name: POSTGRES_SERVER
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: POSTGRES_SERVER
+            - name: POSTGRES_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: POSTGRES_PORT
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: POSTGRES_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: POSTGRES_PASSWORD
+          volumes:
+            - name: postgres-backup
+              # configMap:
+              #   name: backups
+              #   items:
+              #     - key: backups
+              #       path: /
