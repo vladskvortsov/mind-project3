@@ -17,9 +17,7 @@ spec:
             command:
             - /bin/sh
             - -c
-            - export TIMESTAMP=$(date +"%Y%m%d%H%M%S")
-            - export PGPASSWORD=$POSTGRES_PASSWORD
-            - pg_dump -h $POSTGRES_SERVER -U $POSTGRES_USER -f /backups/backup-$TIMESTAMP.sql
+            - export TIMESTAMP=$(date +"%Y%m%d%H%M%S"); export PGPASSWORD=$POSTGRES_PASSWORD; pg_dump -h $POSTGRES_SERVER -U $POSTGRES_USER -f /backups/backup-$TIMESTAMP.sql
             volumeMounts:
               - name: postgres-backup
                 mountPath: /backups
