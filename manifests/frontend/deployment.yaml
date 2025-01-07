@@ -14,7 +14,6 @@ spec:
       labels:
         app: frontend
     spec:
-      # nodeName: fast-node, basic-node
       containers:
       - name: frontend
         image: frontend:0.7.1
@@ -32,17 +31,11 @@ spec:
           httpGet:
             path: /
             port: 80
-            httpHeaders:
-            - name: Custom-Header
-              value: Awesome
           initialDelaySeconds: 15
           periodSeconds: 20
         readinessProbe:
           httpGet:
             path: /
             port: 80
-            httpHeaders:
-            - name: Custom-Header
-              value: Awesome
           initialDelaySeconds: 7
           periodSeconds: 10

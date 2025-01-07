@@ -4,11 +4,9 @@ metadata:
   name: postgres-backup
   namespace: dev
 spec:
-  storageClassName: "standart" # Empty string must be explicitly set otherwise default StorageClass will be set
-  volumeName: postgres-backup
+  storageClassName: "standard" # Empty string must be explicitly set otherwise default StorageClass will be set
   accessModes:
     - ReadWriteOnce
-  volumeMode: Filesystem
   resources:
     requests:
       storage: 0.5Gi
