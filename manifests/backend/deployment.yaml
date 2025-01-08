@@ -14,7 +14,8 @@ spec:
       labels:
         app: backend
     spec:
-      # nodeName: node-fast
+      nodeSelector:
+        app: backend
       initContainers:
       - name: init-postgres-db
         image: cgr.dev/chainguard/wait-for-it

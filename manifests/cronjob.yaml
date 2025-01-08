@@ -9,7 +9,8 @@ spec:
     spec:
       template:
         spec:
-          # nodeName: node-basic
+          nodeSelector:
+            app: cronjob
           restartPolicy: OnFailure
           containers:
           - name: postgres-backup
