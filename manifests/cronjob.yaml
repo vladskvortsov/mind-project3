@@ -29,3 +29,22 @@ spec:
             - name: postgres-backup
               persistentVolumeClaim:
                 claimName: postgres-backup
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pvc-inspector
+  namespace: dev
+spec:
+  containers:
+  - name: pvc-inspector
+    image: busybox
+    command: ["sh", "-c", "sleep infinity"]
+    volumeMounts:
+      - mountPath: /backups
+        name: postgres-backup
+  volumes:
+    - name: postgres-backup
+      persistentVolumeClaim:
+        claimName: postgres-backup
